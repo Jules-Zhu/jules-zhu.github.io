@@ -1,0 +1,386 @@
+%hw-4.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%            Math 403 Homework \#4, Spring 2025            %%%%%%
+%%%%%%                                                          %%%%%%
+%%%%%%                 Instructor: Ezra Miller                  %%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt]{article}
+
+\oddsidemargin=17pt \evensidemargin=17pt
+\headheight=9pt     \topmargin=-36pt
+\textheight=564pt   \textwidth=433.8pt
+\parskip=1ex        %voffset=-6ex
+
+\usepackage{amsmath, amsthm, amssymb,graphicx,color,enumitem}%,setspace%,mathrsfs%,hyperref
+\setlist[enumerate]{parsep=1.5ex plus 4pt,topsep=0ex plus 4pt,itemsep=0ex}
+  \setlist[itemize]{parsep=1.5ex plus 4pt,topsep=-1ex plus 4pt,itemsep=-1.33ex}
+
+\leftmargini=3.5ex
+\leftmarginii=3.5ex
+
+%%%%
+\usepackage{thmtools}
+\declaretheoremstyle[
+spaceabove=6pt, spacebelow=6pt,
+headfont=\normalfont\bfseries,
+notefont=\mdseries, notebraces={(}{)},
+bodyfont=\normalfont,
+postheadspace=1em,
+numberwithin=section
+]{exstyle}
+\declaretheoremstyle[
+spaceabove=6pt, spacebelow=6pt,
+headfont=\normalfont\bfseries,
+notefont=\mdseries, notebraces={(}{)},
+bodyfont=\normalfont,
+postheadspace=1em,
+headpunct={},
+qed=$\blacktriangleleft$,
+numbered=no
+]{solstyle}
+\declaretheorem[style=exstyle]{example}
+\declaretheorem[style=exstyle]{nonexample}
+\declaretheorem[style=solstyle]{solution}
+
+%for \marginpar to fit optimally
+%hoffset=-1.02in
+\setlength\marginparwidth{2.2in}
+\setlength\marginparsep{1mm}
+\newcommand\red[1]{\marginpar{\linespread{.85}\sf%
+		   \vspace{-1.4ex}\footnotesize{\color{red}#1}}}
+\newcommand\score[1]{\marginpar{\vspace{-2ex}\color{blue}{#1/3}}\hspace{-1ex}}
+\newcommand\extra[1]{\marginpar{\color{blue}{#1/1}}\hspace{-1ex}}
+\newcommand\total[2]{\marginpar{\colorbox{yellow}{\huge #1/#2}}}
+\newcommand\collab[1]{\marginpar{\vspace{-11ex}\colorbox{yellow}{#1/3}}\hspace{-1ex}}
+\newcommand\magenta[1]{\colorbox{magenta}{\!\!#1\!\!}}
+\newcommand\yellow[1]{\colorbox{yellow}{\!\!#1\!\!}}
+\newcommand\green[1]{\colorbox{green}{\!\!#1\!\!}}
+\newcommand\cyan[1]{\colorbox{cyan}{\!\!#1\!\!}}
+\newcommand\rmagenta[2][0ex]{\red{\vspace{#1}\magenta{\phantom{:}}\,: #2}}
+\newcommand\ryellow[2][0ex]{\red{\vspace{#1}\yellow{\phantom{:}}\,: #2}}
+\newcommand\rgreen[2][0ex]{\red{\vspace{#1}\green{\phantom{:}}\,: #2}}
+\newcommand\rcyan[2][0ex]{\red{\vspace{#1}\cyan{\phantom{:}}\,: #2}}
+
+%For separated lists with consecutive numbering
+\newcounter{separated}
+
+\newcommand{\excise}[1]{}
+\newcommand{\comment}[1]{{$\star$\sf\textbf{#1}$\star$}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                 %
+% TO ENABLE GRADING, DO NOT ALTER ABOVE THIS LINE %
+%                                                 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%new math symbols taking no arguments
+\newcommand\0{\mathbf{0}}
+\newcommand\CC{\mathbb{C}}
+\newcommand\FF{\mathbb{F}}
+\newcommand\NN{\mathbb{N}}
+\newcommand\QQ{\mathbb{Q}}
+\newcommand\RR{\mathbb{R}}
+\newcommand\ZZ{\mathbb{Z}}
+\newcommand\bb{\mathbf{b}}
+\newcommand\kk{\Bbbk}
+\newcommand\mm{\mathfrak{m}}
+\newcommand\xx{\mathbf{x}}
+\newcommand\yy{\mathbf{y}}
+\newcommand\GL{\mathit{GL}}
+\newcommand\FL{{\mathcal F}{\ell}_n}
+\newcommand\SO{\mathit{SO}}
+\newcommand\into{\hookrightarrow}
+\newcommand\minus{\smallsetminus}
+\newcommand\goesto{\rightsquigarrow}
+
+%redefined math symbols taking no arguments
+\newcommand\<{\langle}
+\renewcommand\>{\rangle}
+\renewcommand\iff{\Leftrightarrow}
+\renewcommand\implies{\Rightarrow}
+
+%to explain about LaTeX commands:
+\newcommand\command[1]{\texttt{$\backslash$#1}}
+
+%new math symbols taking arguments
+\newcommand\ol[1]{{\overline{#1}}}
+
+%redefined math symbols taking arguments
+\renewcommand\mod[1]{\ (\mathrm{mod}\ #1)}
+
+%roman font math operators
+\DeclareMathOperator\im{im}
+
+%for easy 2 x 2 matrices
+\newcommand\twobytwo[1]{\left[\begin{array}{@{}cc@{}}#1\end{array}\right]}
+
+%for easy column vectors of size 2
+\newcommand\tworow[1]{\left[\begin{array}{@{}c@{}}#1\end{array}\right]}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\title{\textbf{Number Theory Homework \#1} \textit{Spring 2025}\\\normalsize
+	Instructor: \textit{Chan Ieong Kuan}\\[-2ex]}
+\author{Solutions by: \textit{\textbf{Haoyu Zhu}}\\[2ex]}
+\date{}
+\maketitle
+
+\vspace{-5ex}%
+
+\noindent
+\textsc{Exercises}% covers Lectures 14 - 17
+
+\begin{enumerate}
+\section{UFD}
+\item\ 
+Exercise 1.1:
+\begin{proof}
+$(a,b)|(b,r)$: $r = a-qb$, so $(a,b)|r$. Additionally, $(a,b)|b$.\par
+$(b,r)|(a,b)$: by virtue of $a = qb+r$, then proceeds similar asforehead.
+\end{proof}
+\item\ 
+Exercise 1.3:
+\begin{itemize}
+    \item (187, 221) = (187, 34) = (34, 17) = 17.
+    \item (6188, 4709) = (4709, 1479) = (1479, 272) = (272, 119) = (119, 34) = (34, 17) = 17.
+    \item (314,159) = (159,155) = (155, 4) = 1
+\end{itemize}
+\item\
+Exercise 1.16:
+\begin{proof}
+    Since $\ZZ$ is a unique factorization domain and $(u,v) = 1$, one can decompose $u,v$ with $0 \leq n_1 \leq n_2, e_i > 0$, and $p_i$ primes: 
+\begin{eqnarray*}
+    u = \prod_{i=1}^{n_1}p_i^{e_i};
+    v = \prod_{i=n_1+1}^{n_2}p_i^{e_i};
+    uv = \prod_{i=1}^{n_2}p_i^{e_i}
+\end{eqnarray*}
+In light of $uv = a^2$, $e_i$ must all be even. Consequently, $u,v$ are squares.
+
+\end{proof}
+\item\ Exercise 1.21
+\begin{proof}
+    Without loss of generality, assume $ord_p\,a \leq ord_p\,b$, and write $r = ord_p\,(a+b), s = ord_p\,a, t = ord_p\,b$ satisfying
+    \[a = p^sq_a,\, b = p^tq_b, (a+b)= p^s(q_a + p^{(t-s)}q_b),\] where
+    $q_a, q_b$ are relatively prime to $p$. Because $p^s$ divides $a+b$, 
+    the inequality holds.\par
+    Moreover, when $t > s$, \[q_a + p^{t-s}q_b \equiv q_a \mod{p}\], so $s$ is the maximal power of $p$ factorizing $a+b$,
+    thereby the equlity.
+\end{proof}
+\item\ Exercise  1.23
+\begin{proof}
+    Suppose that $a,b$ are both odd, then $c^2$ is even.
+    As a result, $c$ is even and $4|c^2 = a^2 + b^2$, but $a^2, b^2$ are equivalent to 1 modulo 4. This is impossible. Consequently, 
+    one of $a,b$ should be even, say $a$. For $a,b,c$ are pairly coprime, $b,c$ are odd numbers. Now $a^2 = (c-b)(c+b)$, and 4 divides both sides. One obtains: 
+    \[\left(\frac{a}{2}\right)^2 = \frac{(c-b)}{2}\frac{(c+b)}{2}\] Again, by virtue of $(b,c)=1$,
+    there exist $x,y \in \ZZ$ such that $xb+yc=1$, then \[(x+y)(\frac{(c+b)}{2})+ (y-x)\frac{(c-b)}{2} = 1.\] Hence $(\frac{(c-b)}{2}, \frac{(c+b)}{2})=1$.
+    According to Exercise 1.16, both $\frac{(c+b)}{2}$ and $\frac{(c-b)}{2}$ are squares which are coprime. Thereby the existence of $u,v$ as stated in the problem.\par
+    Conversely, when $a = 2uv, b= v^2-u^2, c = v^2+u^2$, then 、\[a^2 + b^2 = 4u^2v^2 + u^4 - 2u^2v^2 +v^4 = c^2\].
+
+\end{proof}
+\newpage
+\section{Arithmetic Functions}
+\subsection*{1. Number of Divisors Function: \(\nu(n)\)}
+The function \(\nu(n)\) counts the number of positive divisors of \(n\):
+\[
+\nu(n) = \sum_{d \mid n} 1
+\]
+\subsection*{2. Sum of Divisors Function: \(\sigma(n)\)}
+The function \(\sigma(n)\) calculates the sum of all positive divisors of \(n\):
+\[
+\sigma(n) = \sum_{d \mid n} d
+\]
+\subsection*{3. Generalized Sum of Divisors Function: \(\sigma_s(n)\)}
+For a real or complex number \(s\), the function \(\sigma_s(n)\) is defined as:
+\[
+\sigma_s(n) = \sum_{d \mid n} d^s
+\]
+\subsection*{4. Euler's Totient Function: \(\phi(n)\)}
+Euler's totient function \(\phi(n)\) counts the number of integers up to \(n\) that are coprime to \(n\):
+\[
+\phi(n) = \left| \{k \in \mathbb{N} \mid 1 \leq k \leq n, \gcd(k, n) = 1\} \right|
+\]
+
+\subsection*{5. Mobius Function: \(\mu(n)\)}
+The Möbius function \(\mu(n)\) is defined as:
+\[
+\mu(n) = 
+\begin{cases}
+1 & \text{if } n = 1, \\
+(-1)^k & \text{if } n \text{ is the product of } k \text{ distinct primes}, \\
+0 & \text{if } n \text{ has a squared prime factor}.
+\end{cases}
+\]
+
+\subsection*{6. Riemann Zeta Function: \(\zeta(s)\)}
+The Riemann zeta function \(\zeta(s)\) is defined for complex numbers \(s\) with \(\Re(s) > 1\) as:
+\[
+\zeta(s) = \sum_{n=1}^\infty \frac{1}{n^s}
+\]
+\item\ Exercise  2.10
+\begin{proof}
+    For every coprime pair $m,n$, once $d\mid mn$, $d$ can be uniquely factored into $d=d_1d_2$, where $d_1\mid m, d_2\mid n$.
+    Provided $(m,n) = 1$,  one has 
+\[
+g(mn) = \sum_{d \mid mn} f(d) = \sum_{\substack{d_1 \mid m \\ d_2 \mid n}} f(d_1 d_2) = \sum_{\substack{d_1 \mid m \\ d_2 \mid n}} f(d_1) f(d_2) = \left( \sum_{d_1 \mid m} f(d_1) \right) \left( \sum_{d_2 \mid n} f(d_2) \right) = g(m) g(n)
+\]
+\end{proof}
+\item\ Exercise  2.12
+\begin{proof}
+    Since $\phi(n), \mu(n)$ are multiplicative, the combinations of their products or quotients remain multiplicative. In terms of Exercise 2.10, 
+    the three Arithmetic Functions are multiplicative, too. As a result, they are determined completely by its value on prime powers. For any 
+    $n = \prod_{i=1}^{k}{p_i}^{e_i}$, applying multiplicative $f$ one obtains $f(n) = \prod_{i=1}^{k}f({p_i}^{e_i})$. Now we only need to set $n = p^e$.
+    \begin{itemize}
+        \item $\sum_{d|p^e}{\mu(d)\phi(d)} = \mu(1)\phi(1) + \mu(p)\phi(p) = 1 - (p-1) = 2 - p.$
+        \item $\sum_{d|p^e}{\mu(d)^2\phi(d)^2} = \mu(1)^2\phi(1)^2 + \mu(p)^2\phi(p)^2 = 1 + (p-1)^2 = p^2 - 2p +2.$
+        \item $\sum_{d|p^e}{\mu(d)/\phi(d)} = \mu(1)/\phi(1) + \mu(p)/\phi(p) = 1 - (p-1)^{-1}.$
+    \end{itemize}
+    The formulas for arbitrary positive integrers follow trivially.
+\end{proof}
+\item\ Exercise  2.22
+\begin{proof}
+    For convenience, we define  
+    \[
+    f(n) = \sum_{(t,n)=1} t.
+    \]  
+    We start with the sum of all elements in \(\{1,2,\dots,n\}\):  
+    \[
+    \sum_{i=1}^{n} i = \frac{(1+n)n}{2}.
+    \]  
+    Next, we partition the elements based on their greatest common divisor with \( n \), rewriting the sum as:  
+    \[
+    \sum_{i=1}^{n} i = \sum_{d \mid n} \sum_{\substack{(t,n)=d}} t.
+    \]  
+    Using the substitution \( t = d t' \) where \( (t', n/d) = 1 \), we obtain:  
+    \[
+    \sum_{\substack{(t,n)=d}} t = d \sum_{\substack{(t',n/d)=1}} t' = d f(n/d).
+    \]  
+    Thus, we conclude:  
+    \begin{align*}
+        &\frac{(1+n)n}{2} = \sum_{d \mid n} d f(n/d),\\
+        \iff\quad &\frac{(1+n)n}{2} = \sum_{d \mid n} (n/d) f(d),\\
+        \iff\quad &(1+n) = \sum_{d \mid n} \frac{2 f(d)}{d}.
+    \end{align*}
+    
+    Define \( g(n) = \frac{2 f(n)}{n} \). We want to show that $g(n) = \phi(n)$. 
+    Writing \( n \) in its prime factorization as \( n = \prod_{i=1}^{k} p_i^{e_i} \), we obtain:  
+    \begin{align*}
+        &(1+n) = g \ast I(n),\\
+        \iff\quad &g(n) = (\mu \ast I) \ast g(n) = \mu \ast (I \ast g)(n) = \sum_{d \mid n} \mu(d) \left( 1 + \frac{n}{d} \right),\\
+        \iff\quad &g(n) = (1+n) - \sum_{i=1}^{k} \left( 1 + \frac{n}{p_i} \right) + \dots + (-1)^k \left( 1 + \frac{n}{\prod_{i=1}^{k} p_i} \right).
+    \end{align*}
+    
+    Note that $1 + \frac{n}{p}$ is the number of elements in $\{0,1,2,\ldots,n\}$ divided by $p$ for $p\mid n$. By the principle of inclusion-exclusion, $g(n)$ equals to the number of elements in $\{0,1,2,\ldots,n\}$ that are coprime to $n$.
+    We conclude that \( g(n) = \phi(n) \).
+    
+\end{proof}
+\item\ Exercise  2.25
+\begin{proof}
+    We start with the Euler product formula for the Riemann zeta function:
+
+    \[
+        \prod_{p} \left( 1 - \frac{1}{p^s} \right)^{-1} = \prod_{p} \sum_{i=1}^{\infty} \left( \frac{1}{p^s} \right)^i.
+    \]
+    
+    Taking the product over all primes and expanding the infinite series, we obtain:
+    
+    \begin{eqnarray}\label{zeta}
+        \prod_{p} \left( 1 - \frac{1}{p^s} \right)^{-1} = \prod_{p} \sum_{i=1}^{\infty} \frac{1}{p^{is}} = \sum\prod_{i=1}^{N_n} \frac{1}{(p_i^s)^{e_i}}.
+    \end{eqnarray}
+    
+    Next, we recover the Dirichlet series definition of the Riemann zeta function:
+    
+    \begin{eqnarray}
+        \zeta(s) = \sum_{n=1}^{\infty} \frac{1}{n^s}.
+    \end{eqnarray}
+    
+    Now, consider the alternative product expansion since each \( n \) can be uniquely factored as \( n = p_1^{e_1} p_2^{e_2} \cdots p_k^{e_k} \):
+    \begin{eqnarray}
+        \sum_{n=1}^{\infty} \frac{1}{n^s} = \sum_{n=1}^{\infty} \frac{1}{\prod_{i=1}^{N_n} (p_i^s)^{e_i}}.
+    \end{eqnarray}
+    
+    
+    We see that this expansion matches the right-hand side of the Euler product in equation \eqref{zeta}, establishing the connection between the two representations of \( \zeta(s) \).
+    
+\end{proof}
+\item\ Exercise  2.26
+\begin{proof}
+\begin{itemize}
+    \item{Verification of \( \zeta(s)^{-1} = \sum \frac{\mu(n)}{n^s} \)}
+
+Starting from the Euler product representation of \( \zeta(s) \):
+
+\[
+\zeta(s) = \prod_{p} \left( 1 - \frac{1}{p^s} \right)^{-1}.
+\]
+
+Taking the reciprocal:
+
+\[
+\zeta(s)^{-1} = \prod_{p} \left( 1 - \frac{1}{p^s} \right).
+\]
+
+Expanding each term as an infinite product:
+
+\[
+\prod_{p} \left( 1 - \frac{1}{p^s} \right) = \sum \frac{(-1)^k}{(\prod_{i=1}^{k}{p_i^s})}= \sum_{n=1}^{\infty} \frac{\mu(n)}{n^s}.
+\]
+
+\item{Verification of \( \zeta(s)^2 = \sum \frac{\nu(n)}{n^s} \)}
+
+Squaring the Euler product results in a double sum:
+\[
+\zeta(s)^2 = \sum_{m=1}^{\infty} \sum_{n=1}^{\infty} \frac{1}{(mn)^s}.
+\]
+We introduce the function \( \nu(n) \), which counts the number of ways to write \( n \) as a product of two factors \( m \) and \( n \):
+\[
+\nu(n) = \sum_{d|n} 1.
+\]
+Thus, we can partition the sum above in terms of the value of $mn$, write $M$, and obtain:
+\[
+    \sum_{m=1}^{\infty} \sum_{n=1}^{\infty} \frac{1}{(mn)^s} = 
+    \sum_{M=1}^{\infty} \sum_{n\mid M} \frac{1}{(M)^s} = 
+    \sum_{M=1}^{\infty} \frac{\nu(M)}{M^s}.
+\]
+\item{Verification of \( \zeta(s) \zeta(s-1) = \sum \frac{\sigma(n)}{n^s} \)}
+
+Starting from the product representation:
+
+\[
+\zeta(s) \zeta(s-1) = \left( \sum_{m=1}^{\infty} \frac{1}{m^s} \right) \left( \sum_{n=1}^{\infty} \frac{1}{n^{s-1}} \right).
+\]
+
+Expanding the double sum:
+
+\[
+\sum_{m=1}^{\infty} \sum_{n=1}^{\infty} \frac{1}{m^s n^{s-1}} 
+\overset{(M = mn)}{=}
+\sum_{M=1}^{\infty} \sum_{n \mid M} \frac{n}{M^s} 
+= \sum_{M=1}^{\infty} \frac{\sum_{n \mid M} n}{M^s} 
+= \sum_{M=1}^{\infty} \frac{\sigma(M)}{M^s}.
+\]
+
+where \( \sigma(M) = \sum_{d|M} d \) is the sum of divisors function.
+\end{itemize}
+\end{proof}
+\end{enumerate}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%% Various Emacs customizations:
+%%% Local Variables:
+%%% fill-column: 70
+%%% indent-tabs-mode: t
+%%% TeX-electric-sub-and-superscript: nil
+%%% TeX-brace-indent-level: 0
+%%% LaTeX-indent-level: 0
+%%% LaTeX-item-indent: 0
+%%% TeX-master: t
+%%% End:
