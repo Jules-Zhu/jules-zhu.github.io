@@ -1,0 +1,290 @@
+\documentclass[11pt]{article}
+
+\oddsidemargin=17pt \evensidemargin=17pt
+\headheight=9pt     \topmargin=-36pt
+\textheight=564pt   \textwidth=433.8pt
+\parskip=1ex        %voffset=-6ex
+
+\usepackage{amsmath, amsthm, amssymb,graphicx,color,enumitem}%,setspace%,mathrsfs%,hyperref
+\usepackage{xcolor}
+\usepackage{hyperref}
+\setlist[enumerate]{parsep=1.5ex plus 4pt,topsep=0ex plus 4pt,itemsep=0ex}
+  \setlist[itemize]{parsep=1.5ex plus 4pt,topsep=-1ex plus 4pt,itemsep=-1.33ex}
+
+\leftmargini=3.5ex
+\leftmarginii=3.5ex
+
+\hypersetup{%
+  colorlinks=false,% hyperlinks will be black
+  linkbordercolor=green,% hyperlink borders will be red
+  pdfborderstyle={/S/U/W 1}% border style will be underline of width 1pt
+}
+%%%%
+\usepackage{thmtools}
+\declaretheoremstyle[
+spaceabove=6pt, spacebelow=6pt,
+headfont=\normalfont\bfseries,
+notefont=\mdseries, notebraces={(}{)},
+bodyfont=\normalfont,
+postheadspace=1em,
+numberwithin=section
+]{exstyle}
+\declaretheoremstyle[
+spaceabove=6pt, spacebelow=6pt,
+headfont=\normalfont\bfseries,
+notefont=\mdseries, notebraces={(}{)},
+bodyfont=\normalfont,
+postheadspace=1em,
+headpunct={},
+qed=$\blacktriangleleft$,
+numbered=no
+]{solstyle}
+\declaretheorem[style=exstyle]{example}
+\declaretheorem[style=exstyle]{nonexample}
+\declaretheorem[style=solstyle]{solution}
+
+%for \marginpar to fit optimally
+%hoffset=-1.02in
+\setlength\marginparwidth{2.2in}
+\setlength\marginparsep{1mm}
+\newcommand\red[1]{\marginpar{\linespread{.85}\sf%
+		   \vspace{-1.4ex}\footnotesize{\color{red}#1}}}
+\newcommand\score[1]{\marginpar{\vspace{-2ex}\color{blue}{#1/3}}\hspace{-1ex}}
+\newcommand\extra[1]{\marginpar{\color{blue}{#1/1}}\hspace{-1ex}}
+\newcommand\total[2]{\marginpar{\colorbox{yellow}{\huge #1/#2}}}
+\newcommand\collab[1]{\marginpar{\vspace{-11ex}\colorbox{yellow}{#1/3}}\hspace{-1ex}}
+\newcommand\magenta[1]{\colorbox{magenta}{\!\!#1\!\!}}
+\newcommand\yellow[1]{\colorbox{yellow}{\!\!#1\!\!}}
+\newcommand\green[1]{\colorbox{green}{\!\!#1\!\!}}
+\newcommand\cyan[1]{\colorbox{cyan}{\!\!#1\!\!}}
+\newcommand\rmagenta[2][0ex]{\red{\vspace{#1}\magenta{\phantom{:}}\,: #2}}
+\newcommand\ryellow[2][0ex]{\red{\vspace{#1}\yellow{\phantom{:}}\,: #2}}
+\newcommand\rgreen[2][0ex]{\red{\vspace{#1}\green{\phantom{:}}\,: #2}}
+\newcommand\rcyan[2][0ex]{\red{\vspace{#1}\cyan{\phantom{:}}\,: #2}}
+
+%For separated lists with consecutive numbering
+\newcounter{separated}
+
+\newcommand{\excise}[1]{}
+\newcommand{\comment}[1]{{$\star$\sf\textbf{#1}$\star$}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                 %
+% TO ENABLE GRADING, DO NOT ALTER ABOVE THIS LINE %
+%                                                 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%new math symbols taking no arguments
+\newcommand\0{\mathbf{0}}
+\newcommand\CC{\mathbb{C}}
+\newcommand\FF{\mathbb{F}}
+\newcommand\NN{\mathbb{N}}
+\newcommand\QQ{\mathbb{Q}}
+\newcommand\RR{\mathbb{R}}
+\newcommand\ZZ{\mathbb{Z}}
+\newcommand\bb{\mathbf{b}}
+\newcommand\kk{\Bbbk}
+\newcommand\mm{\mathfrak{m}}
+\newcommand\xx{\mathbf{x}}
+\newcommand\yy{\mathbf{y}}
+\newcommand\GL{\mathit{GL}}
+\newcommand\FL{{\mathcal F}{\ell}_n}
+\newcommand\SO{\mathit{SO}}
+\newcommand\into{\hookrightarrow}
+\newcommand\minus{\smallsetminus}
+\newcommand\goesto{\rightsquigarrow}
+
+%redefined math symbols taking no arguments
+\newcommand\<{\langle}
+\renewcommand\>{\rangle}
+\renewcommand\iff{\Leftrightarrow}
+\renewcommand\implies{\Rightarrow}
+
+%to explain about LaTeX commands:
+\newcommand\command[1]{\texttt{$\backslash$#1}}
+
+%new math symbols taking arguments
+\newcommand\ol[1]{{\overline{#1}}}
+
+%redefined math symbols taking arguments
+\renewcommand\mod[1]{\ (\mathrm{mod}\ #1)}
+
+%roman font math operators
+\DeclareMathOperator\im{im}
+
+%for easy 2 x 2 matrices
+\newcommand\twobytwo[1]{\left[\begin{array}{@{}cc@{}}#1\end{array}\right]}
+
+%for easy column vectors of size 2
+\newcommand\tworow[1]{\left[\begin{array}{@{}c@{}}#1\end{array}\right]}
+\setcounter{section}{2}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\title{\textbf{Number Theory Homework \#2} \textit{Spring 2025}\\\normalsize
+	Instructor: \textit{Chan Ieong Kuan}\\[-2ex]}
+\author{Solutions by: \textit{\textbf{Haoyu Zhu}}\\[2ex]}
+\date{}
+\maketitle
+
+\vspace{-5ex}%
+
+\noindent
+\textsc{Exercises}
+\begin{enumerate}
+\section{Congruence}
+\item\ \label{CRT}
+Exercise 3.17:
+\begin{proof}
+  $(\Rightarrow)$: If there exists $x_0 \in \ZZ_n$ solving $f(x) \equiv 0 \mod{n}$, then it simultaneously solves $f(x) \equiv 0 \mod{p_i^{a_i}}$ as an element in $\ZZ_{p_i^{a_i}}$ after applying the carnonical projection $\ZZ_n \to \ZZ_{p_i^{a_i}}$. This is well-defined because $f(x) \in \ZZ[x]$ and $n = \displaystyle\prod_{i=1}^{t}{p_i^{a_i}}.$
+
+  $(\Leftarrow)$: Assume that $f(x_i) \equiv 0 \mod{p_i^{a_i}}$ for each $i$. Equivalently speaking, $f(x_i) = 0 \in \ZZ_{p_i^{a_i}}$ with $x \in \ZZ_{p_i^{a_i}}$ and $f(x) \in \ZZ_{p_i^{a_i}}[x]$. In terms of \textbf{Chinese Remainder Theorem}, $p_i^{a_i}$ being pairwise relatively prime integers, we can find a unique $x_0 \in \ZZ_n$ such that $x_0 = x_i$ in $\ZZ_{p_i^{a_i}}$ as projecting $\ZZ_n \to \ZZ_{p_i^{a_i}}$ carnonically. Now embedding $\ZZ_{p_i^{a_i}}$ and $\ZZ_{p_i^{a_i}}[x]$ into $\ZZ_n$ and $\ZZ_n[x]$, respectively, we establish that $f(x_0) = 0 \in \ZZ_n$ since moreover,
+  \[\ZZ_n = \oplus_{i=1}^{t} \ZZ_{p_i^{a_i}}.\]
+  Remark that a ring-theoretic-free but equivalent arguement is as below: since $f(x_0) \equiv 0$ modulo every $p_i^{a_i}$, $f(x_0) \equiv 0$ modulo their least common multiple, write \[lcm_i(p_i^{a_i})= \displaystyle\prod_{i=1}^{t}{p_i^{a_i}}= n.\] 
+\end{proof}
+\item\label{mult}
+Exercise 3.18:
+\begin{proof}
+  As the carnonical mappings show in \ref{CRT} (Ex. 3.17 ), every $x_0 \in \ZZ_n$ one-to-one corresponds to the t-tuple $(x_i)_i$, and vice versa. According to the principle of multiplicity in combinatorics, $N = N_1\cdots N_t.$
+\end{proof}
+\item\ 
+Exercise 3.19:
+\begin{proof}
+  Over the ring $\ZZ_{p^a}$, $x^2 = 1 \iff (x-1)(x+1) = 0.$ Consequently, assuming first $x \neq \pm 1$, $(x-1)$ and $(x+1)$ are zero devisors, which implies that $p$ devides both of them and hence, their difference $(x+1) - (x-1) = 2.$ However, $p$ is an odd prime, which leads to contradiction. Thus, the solutions have to be only $\pm 1.$
+\end{proof}
+\item\
+Exercise 3.20:
+\begin{proof} \label{case-2}
+  \begin{itemize}
+    \item $b=1:$ $x = 1 \in \ZZ_2.$
+    \item $b=2:$ $x = \pm 1 \in \ZZ_4.$
+    \item $b \geq 3:$ $(x+1)(x-1) = 0 \in \ZZ_{2^b}.$ Since $(x+1)$ and $(x-1)$ share the same sign with a greatest common devisor less or equal than 2 over $\ZZ_{2^b}$, we need and only need one of them being devided by $2^{b-1}.$ Therefore, there are precisely four solution.
+  \end{itemize}
+\end{proof}
+\item\ 
+Exercise 3.21:
+\begin{proof}
+  Say $n = 2^b\displaystyle\prod_{i=1}^{t}{p_i^{a_i}}.$ In light of multiplicity formula as in \ref{mult}, \[N = N(2)\prod_{i = 1}^{t}N(p_i^{a_i}) = N(2)*2^t,\] where $N(2)$ is the number of solutions to $x^2 = 1 \mod{2^p_1}$ given by \ref{case-2}.
+\end{proof}
+\section{Unit group}
+\item\ 
+Exercise 4.6: Show that $3$ is a primitive root modulo $p$, a Fermat prime of the form $2^n+1.$
+\begin{proof}
+    Otherwise, with $p = 2^n+1$ a prime, we can define its primitive root, say $g$, and hence $3 \equiv g^k \mod p$, where $k$ satisfies $1 < k < p-1 = 2^n.$  Since $g^{2^n} \equiv 1 \mod p,$ we know that $k$ devides $2^n$ and $3^{\frac{2^n}{k}} \equiv 1 \mod p.$ 
+Therefore, $k$ is even and $3$ is a quadratic residue modulo $p$. However, for every $n \geq 4$, $2^n+1 \equiv 2 \mod 3$, so by law of quadratic reciprocity,
+\[
+ {\genfrac{(}{)}{}{}{3}{2^n+1}}{\genfrac{(}{)}{}{}{2^n+1}{3}} = (-1)^{(2^{n-1})(1)}
+\iff {\genfrac{(}{)}{}{}{3}{2^n+1}}(-1) = 1
+\iff {\genfrac{(}{)}{}{}{3}{2^n+1}} = -1,
+\]
+which contradicts that 3 is a quadratic residue.
+
+When $n \leq 3$, i.e. $p=5$, it is easy to verify that $3$ is a primitive root.
+
+(Remark: I fail to find any solution not using the \textsc{law of quadratic residues} ...)
+\end{proof}
+\item\ 
+Exercise 4.11:
+\begin{proof}
+  Denote by $g$ some generator of $U(\ZZ_p) = \{1, 2, \cdots, p-1\}$, i.e. one of the primitive roots modulo $p$. Then, $g^{p-1} = 1 \in \ZZ_p.$ We do all our next computation over $\ZZ_p.$
+
+  When $p-1 \nmid k \iff g^k \neq 1$ in $\ZZ_p,$ 
+\[\displaystyle\sum_{i=1}^{p-1}i^k = \sum_{i=0}^{p-2}(g^i)^k = \sum_{i=0}^{p-2}(g^{k})^i = \frac{g^{(p-1)k}-1}{g^k -1} = 0.\]
+  When $p-1 \mid k \iff g^k = 1 \in \ZZ_p,$  \[\displaystyle\sum_{i=1}^{p-1}i^k = \sum_{i=0}^{p-2}(g^{k})^i = \sum_{i=0}^{p-2}1 = p-1 = -1.\]
+\end{proof}
+\section{Quadratic Residues}
+\item\ 
+Exercise 5.5:
+\begin{proof}
+  Provided that $p \nmid a,$ \[\displaystyle\sum_{x=0}^{p-1}((ax+b)/p) = \sum_{x=0}^{p-1}(x/p) = 0.\] The last equation holds because there are as many non-residues as residues.
+\end{proof}
+\item\ 
+Exercise 5.11:
+\begin{proof}
+  Note that $2^p = 2^{(q-1)/2} = (2/q) = (-1)^{{q^2-1}/8} = (-1)^{{p^2+p}/2} = 1 \in \ZZ_q.$ The last equation is obtained from the fact that $p \equiv 3 \mod{4}.$ Thus, prime $q$ is a factor of $2^p-1$, completing the proof.
+\end{proof}
+\item\ 
+Exercise 5.29:
+\begin{proof}
+  Write the primitive root in $\ZZ_p$ as $g$, hence write $i = g^{e_i},$ $i = 1, 2, \cdots, p-1.$ Besides, denote the numbers of residues and nonresidues by, respectively, $(R), (N).$ We have already known very clearly that $(R) = (N) = \frac{p-1}{2}.$
+  
+  Now the set (with ascending order) $\{1,2,\cdots, p-1\}$ can be represented in the same order by $\{e_1, e_2, \cdots, e_{p-1}\}$, and some $i$ is a quadratic residue if and only if $k_i$ is an even integer. 
+  
+  We can first without any effort conduct the total counting:
+  \begin{align}
+    p-2 = (RR) + (NR) +(RN) +(NN).
+  \end{align}
+  Then, since 1 is always a quadratic residue and $(-1/p) \equiv (-1)^{(p-1)/2} \mod{p},$ the numbers of each pair depend on the residue of $p$ modulo 4. From another perspective, if we add $(p-1, 1)$ into these $(p-2)$ pairs and complete the cycle in $U(\ZZ_p)$, then we obtain exactly:
+  \begin{align*}
+    (RR) + (RN) = (NR) + (NN) = (RR) + (NR) = (RN) + (NN) = \frac{p-1}{2}.
+  \end{align*}
+  Thus, we only need to exam which type $(p-1,1)$ falls into and then cancel it out.
+\begin{itemize}
+  \item When $p\equiv 3\mod{4},$ we compute $(-1/p)\equiv (-1)^{(p-1)/2} \equiv -1 \mod{p}$. Therefore, the  $(p-1, 1) = (NR)$.
+  \begin{align*}
+    (RR) + (RN) &= \frac{p-1}{2},\\
+    (NR) + (NN) &= \frac{p-1}{2} -1, \\
+    (RR) + (NR) &= \frac{p-1}{2} -1, \\
+    (RN) + (NN) &= \frac{p-1}{2}.\\
+  \end{align*}
+  \item When $p\equiv 1\mod{4},$ we compute $(-1/p)\equiv 1 \mod{p}$. In this case, the $(p-1, 1) = (RR)$.
+  \begin{align*}
+    (RR) + (RN) &= \frac{p-1}{2} -1, \\
+    (NR) + (NN) &= \frac{p-1}{2}, \\
+    (RR) + (NR) &= \frac{p-1}{2} -1, \\
+    (RN) + (NN) &= \frac{p-1}{2}. \\
+  \end{align*}
+\end{itemize}
+\end{proof}
+\item\ 
+Exercise 5.30:
+\begin{proof}
+Since $n, n+1, p$ are pairwise relatively prime integers, $(n(n+1)/p) = (n/p)({n+1}/p)$. It equals to 1 for $(RR), (NN)$ pairs and -1 for the others, hence the first equation.
+
+It remains to show that the sum is -1. We prove Ex. 8 as our lemma first. I would like to try another method\footnote[1]{It has a gap and I wonder how to prove it.} instead of the method of \textbf{Double Counting} following Ex.6 and 7 in the books (I did compute them).
+
+Define a matrix (noticing that i,j here are not conventionally starting from 1 but 0) \[A = \left(((i+j^2)/p)\right)_{0\leq i,j\leq {p-1}} = 
+\begin{bmatrix}
+  0 & 1 & \cdots & 1 & 1 \\
+  (1/p) & (2/p) & \vdots & (5/p) & (2/p) \\
+  \vdots & \vdots & \ddots & \vdots & \vdots \\
+  (-1/p) & 0 & \cdots & (3/p) & 0
+\end{bmatrix}_{p\times p}.\]
+The summation of first row is $p-1$. \textcolor{blue}{\textbf{GAP: (}} The other rows, $((i + j^2)/p)_j$ with nonzero\footnote[2]{in the sense of $\ZZ_p$.} $i$ fixed, have the same summation \textcolor{blue}{\textbf{)}}. Note that every column sums up to be 0, thereby summation of every entry is 0. As a result, \[\displaystyle\sum_{j=0}^{p-1}{(i+j^2)/2}=-1, i\neq 0.\] The summation of $((n(n+1))/2)$ can be regarded as the trace of $A$. (But this perspective seems useless.)
+
+Replace $n^{n+1}$ by $(n+2^{-1})^2-(2^{-1})^2$ which is well-defined for all odd primes, then apply Ex.8, where $i = -(2^{-1})^2$ and $j = n+2^{-1}$. Obvious to see that when $n$ runs through $[p-1]$, so does $n+2^{-1}.$
+\end{proof}
+\item\ 
+Exercise 5.31:
+\begin{proof}
+\[
+\begin{array}{r r r r r}
+   & (RR) & + (NN) & - (RN) &- (NR) \\
+   &      & - (NN) & - (RN) & \\
+ + & 2(RR) &       & + 2(RN) & \\
+ + & (RR)  &       &      &+ (NR) \\
+ \hline
+   & 4(RR) &       &    &
+\end{array}
+\]
+Then plug-in the previous results and complete the verification.
+\end{proof}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%% Various Emacs customizations:
+%%% Local Variables:
+%%% fill-column: 70
+%%% indent-tabs-mode: t
+%%% TeX-electric-sub-and-superscript: nil
+%%% TeX-brace-indent-level: 0
+%%% LaTeX-indent-level: 0
+%%% LaTeX-item-indent: 0
+%%% TeX-master: t
+%%% End:
