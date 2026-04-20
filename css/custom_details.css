@@ -1,4 +1,4 @@
-/* source/css/custom-details.css */
+/* source/css/custom_details.css */
 /* 隐藏浏览器默认的折叠三角 */
 details > summary {
     list-style: none;
@@ -29,6 +29,7 @@ details > summary {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 16px;           /* 控制所有子元素之间的间隔 */
 }
 
 /* 鼠标悬停效果，清晰提示可以点击 */
@@ -40,7 +41,7 @@ details > summary:hover {
 details > summary::before {
     content: "📂 ";
     font-size: 1.1em;
-    margin-right: 8px;
+    margin-right: 0px;
 }
 
 details[open] > summary::before {
@@ -52,6 +53,7 @@ details > summary::after {
     content: " ▶";
     font-size: 0.8em;
     transition: transform 0.2s;
+    margin-left: 0;      /* gap 已经提供了间隔，margin 可选 */
 }
 
 details[open] > summary::after {
