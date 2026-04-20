@@ -1,0 +1,71 @@
+/* source/css/custom-details.css */
+/* 隐藏浏览器默认的折叠三角 */
+details > summary {
+    list-style: none;
+    cursor: pointer;
+}
+
+details > summary::-webkit-details-marker {
+    display: none;
+}
+
+/* 美化折叠区域的样式 */
+details {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 10px;
+    margin: 1.2em 0;
+    overflow: hidden;
+    transition: all 0.2s ease;
+}
+
+/* 美化可点击的摘要区域 */
+details > summary {
+    background: #e9ecef;
+    padding: 12px 18px;
+    font-weight: 600;
+    transition: background 0.2s;
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* 鼠标悬停效果，清晰提示可以点击 */
+details > summary:hover {
+    background: #dee2e6;
+}
+
+/* 自定义左侧图标（加号/减号） */
+details > summary::before {
+    content: "📂 ";
+    font-size: 1.1em;
+    margin-right: 8px;
+}
+
+details[open] > summary::before {
+    content: "📁 ";
+}
+
+/* 自定义右侧指示箭头 */
+details > summary::after {
+    content: " ▶";
+    font-size: 0.8em;
+    transition: transform 0.2s;
+}
+
+details[open] > summary::after {
+    content: " ▼";
+    transform: rotate(0deg);
+}
+
+/* 展开后内容区域的样式 */
+details[open] {
+    background: white;
+    border-color: #ced4da;
+}
+
+details[open] > :not(summary) {
+    padding: 16px 20px;
+    background: white;
+}
